@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"va",
+				"values2"
+			],
+			[
+				"preg",
+				"preg_match"
+			],
+			[
+				"esc",
+				"esc_url"
+			],
+			[
+				"sanit",
+				"sanitize_text_field"
+			],
+			[
+				"sa",
+				"sanitize_text_field"
+			],
+			[
 				"val",
 				"value2"
 			],
@@ -14,10 +34,6 @@
 			[
 				"san",
 				"sanitize_text_field"
-			],
-			[
-				"esc",
-				"esc_sql"
 			],
 			[
 				"t",
@@ -183,7 +199,7 @@
 			"file": "assets/js/frontend.js",
 			"settings":
 			{
-				"buffer_size": 5420,
+				"buffer_size": 5551,
 				"line_ending": "Windows"
 			}
 		},
@@ -191,7 +207,7 @@
 			"file": "assets/css/admin.css",
 			"settings":
 			{
-				"buffer_size": 515,
+				"buffer_size": 516,
 				"line_ending": "Windows"
 			}
 		},
@@ -207,8 +223,18 @@
 			"file": "class-dclv-admin.php",
 			"settings":
 			{
-				"buffer_size": 13117,
+				"buffer_size": 13866,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 16 files for \"woocommerce-variation-add-to-cart\" (regex)\n\n0 matches across 0 files\n\n\nSearching 16 files for \"variations_button\" (regex)\n\nD:\\OSPanel\\domains\\inputpluginforwoocommerce\\wp-content\\plugins\\modifier-for-display-colors-labels-variations\\class-dclv-frontend.php:\n  136  \n  137              <div class=\"single_variation\"></div>\n  138:             <div class=\"variations_button\">\n  139  \n  140                  <?php woocommerce_quantity_input(); ?>\n\n1 match in 1 file\n\n\nSearching 16 files for \"woocommerce-variation-add-to-cart-enabled\" (regex)\n\n0 matches across 0 files\n",
+			"settings":
+			{
+				"buffer_size": 589,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
 			}
 		},
 		{
@@ -223,7 +249,7 @@
 			"file": "log_developer.txt",
 			"settings":
 			{
-				"buffer_size": 593,
+				"buffer_size": 791,
 				"line_ending": "Windows"
 			}
 		}
@@ -353,7 +379,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 90.0,
+		"height": 96.0,
 		"where_history":
 		[
 			"D:\\OSPanel\\domains\\inputpluginforwoocommerce\\wp-content\\plugins\\modifier-for-display-colors-labels-variations",
@@ -375,6 +401,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"woocommerce-variation-add-to-cart-enabled",
+			"variations_button",
+			"woocommerce-variation-add-to-cart",
 			"get_woocommerce_term_meta",
 			"$val = $_POST['term-value'];",
 			"$value = '',",
@@ -470,7 +499,7 @@
 	"groups":
 	[
 		{
-			"selected": 8,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -840,8 +869,8 @@
 						"selection":
 						[
 							[
-								3483,
-								3483
+								4272,
+								4272
 							]
 						],
 						"settings":
@@ -941,7 +970,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2493.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1059,7 +1088,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 270.0,
+						"translation.y": 150.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1069,15 +1098,15 @@
 					"file": "assets/js/frontend.js",
 					"settings":
 					{
-						"buffer_size": 5420,
+						"buffer_size": 5551,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								74,
-								74
+								2301,
+								2301
 							]
 						],
 						"settings":
@@ -1177,7 +1206,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 660.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1187,15 +1216,15 @@
 					"file": "assets/css/admin.css",
 					"settings":
 					{
-						"buffer_size": 515,
+						"buffer_size": 516,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								248,
-								248
+								516,
+								516
 							]
 						],
 						"settings":
@@ -1423,15 +1452,15 @@
 					"file": "class-dclv-admin.php",
 					"settings":
 					{
-						"buffer_size": 13117,
+						"buffer_size": 13866,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5420,
-								5420
+								10489,
+								10489
 							]
 						],
 						"settings":
@@ -1531,13 +1560,56 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3126.0,
+						"translation.y": 5774.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 9,
+					"settings":
+					{
+						"buffer_size": 589,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										377,
+										394
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								388,
+								388
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 3,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 40.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
 					"file": "languages/color-label-variations.pot",
 					"settings":
 					{
@@ -1653,19 +1725,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 11,
 					"file": "log_developer.txt",
 					"settings":
 					{
-						"buffer_size": 593,
+						"buffer_size": 791,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								592,
-								592
+								789,
+								789
 							]
 						],
 						"settings":

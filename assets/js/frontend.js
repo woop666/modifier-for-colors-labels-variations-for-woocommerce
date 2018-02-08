@@ -34,6 +34,8 @@
                         var value = $(this).data('value');
                         var o = $(this);
 
+                        console.log(value);
+
                         var option = $('<div/>', {
                             'class': classes
                         }).data('value', $(this).attr('value'))
@@ -52,13 +54,13 @@
                         if (type == 'colorpicker') {
                             option.append($('<span/>', {
                                 'css': {
-                                    'background': value
+                                    'background': value,
                                 }
                             }));
                         }else if (type == 'two_colorpicker') {
                             option.append($('<span/>', {
                                 'css': {
-                                    'background': value,
+                                    'background': 'linear-gradient(135deg, ' + value.substr(0, 7) + ' 51%, ' + value.substr(7, 14) + ' 51%)',
                                 }
                             }));
                         } else if (type == 'image') {

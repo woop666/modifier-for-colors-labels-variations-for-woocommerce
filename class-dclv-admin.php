@@ -118,7 +118,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             $attribute = $wpdb->get_row( "SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute'" );
             
             $value = dclv_get_term_meta( $term->term_id, $taxonomy . '_dclv_value' );
-            var_dump($value);
+            //var_dump($value);
             do_action('dclv_print_attribute_field', $attribute, $value, 1);
         }
 
@@ -154,6 +154,8 @@ if( !class_exists( 'DCLV_Admin' ) ) {
                 $values2 = substr($value, 7, 14);
             }elseif($type == 'colorpicker'){
                 $values = substr($value, 0, 7);
+            }else{
+                $values = $value;
             }
             
             if( $table ): ?>
@@ -173,9 +175,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
                      </tr>
                 <?php }?>
 
-             <?php 
-
-
+             <?php
              echo "print_fanction_field <br/>";
              var_dump($values); 
              var_dump($values2); 
@@ -218,9 +218,13 @@ if( !class_exists( 'DCLV_Admin' ) ) {
                 }elseif($type == 'colorpicker'){
                      if(preg_match('/[0-9a-z#]{7}/ui', $val)){
                         $val = substr($val, 0, 7);
-                    }else{
-                        $val = "";
-                    }
+                        }else{
+                            $val = "";
+                        }
+                }elseif($type == 'label'){
+                    $val = sanitize_html_class($val);
+                }elseif($type == 'image'){
+                    $val = esc_url( $val, $protocols = null, $_context = 'display' );
                 }
                 dclv_update_term_meta( $term_id, $taxonomy . '_dclv_value', $val );
             }
