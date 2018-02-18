@@ -42,16 +42,10 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             add_action('admin_enqueue_scripts', array($this, 'enqueue'));
 
             //Add Plugin Panel +++
-            add_action( 'admin_menu', array( $this, 'register_panel'));
+            //add_action( 'admin_menu', array( $this, 'register_panel'));
 
             // Loaded +++
-            do_action( 'dclv_loaded' );
-
-            // Add new field for attributes 
-            add_action('woocommerce_after_add_attribute_fields', array($this, 'print_attribute_field_options'), 10, 1);
-
-            // add the action 
-            add_action( 'woocommerce_admin_attribute_types', array($this, 'action_woocommerce_admin_attribute_types'), 10, 1); 
+            do_action( 'dclv_loaded' ); 
 
         }
 
@@ -108,26 +102,6 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             do_action('dclv_print_attribute_field', $attribute->attribute_type, false );
         }
 
-         /**
-         * Print new attribute field after all options for each product  +++
-         *
-         * @access public
-         * @since 1.0.0
-         */
-        public function print_attribute_field_options(){
-
-            echo'<div class="form-field">
-                <label for="special_options">Special options</label>
-                <select name="special_options" id="special_options">
-                    <option value="circular">In circular</option>
-                    <option value="description">Description after</option>
-                    <option value="tooltip">Tooltip top</option>
-                    <p class="description">
-                    </p>
-                </select>
-            </div>';
-
-        }
 
         /**
          * Edit field for each product attribute taxonomy +++
@@ -190,10 +164,10 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
              <?php
              // delete letter
-             echo "print_fanction_field <br/>";
-             var_dump($values); 
-             var_dump($values2); 
-             var_dump($type); 
+             // echo "print_fanction_field <br/>";
+             // var_dump($values); 
+             // var_dump($values2); 
+             // var_dump($type); 
 
 
              ?>
@@ -382,43 +356,6 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             }
 
             return $all_terms;
-        }
-
-
-        // define the woocommerce_admin_attribute_types callback 
-        function action_woocommerce_admin_attribute_types() { 
-            // make action magic happen here... 
-            echo '<option value="jojo" >jojo</option>';
-        }
-                 
-        
-        /**
-         * Register Panel +++
-         *
-        */ 
-        public function register_panel() {
-            add_menu_page( 'Modifier for color labels', 'modifier for labels', 'manage_options', 'MFDCLV',  array( $this, 'dclv_view_admin_page' ), '', null );
-        }
-
-        public function dclv_view_admin_page(){
-            global $wpdb;
-            $attribute = ['colorpicker', 'two_colorpicker', 'image'];
-            $query_attr = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_type = '$attribute[0]' OR attribute_type = '$attribute[1]' OR attribute_type = '$attribute[2]'" );
-
-            foreach ($query_attr as $val) {
-                echo"
-                 <table>
-                    <tbody>
-                        <tr>
-                            <td>$val->attribute_id</td>
-                            <td>$val->attribute_name</td>
-                            <td>$val->attribute_type</td>
-                            <td></td>
-                        </tr>
-                    </tbody>    
-                </table>";
-            }
-            echo "<button id='submit' class='button button-primary'>Save options</button>";
         }
         
     }

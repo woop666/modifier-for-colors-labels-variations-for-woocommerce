@@ -36,10 +36,19 @@ if( ! function_exists( 'dclv_check_wc_version' ) ) {
 if( ! function_exists( 'dclv_get_custom_tax_types' ) ) {
 	function dclv_get_custom_tax_types() {
 		return apply_filters( 'dclv_get_custom_tax_types', array(
-			'colorpicker' 	  					=> __( 'Colorpicker', 'modifier-for-display-colors-labels-variations' ),
-			'two_colorpicker' 					=> __( 'Two colorpicker', 'modifier-for-display-colors-labels-variations' ),
-			'image'           					=> __( 'Image', 'modifier-for-display-colors-labels-variations' ),
-			'label'          			   		=> __( 'Label', 'modifier-for-display-colors-labels-variations' )
+			'colorpicker' 	    => __( 'Colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'round_color' 		=> __( 'Colorpicker in circular', 'modifier-for-display-colors-labels-variations' ),
+			'color_desc' 		=> __( 'Description after colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'tooltip_color'		=> __( 'Tooltip above colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'two_colorpicker'	=> __( 'Two colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'round_two_color' 	=> __( 'Two colorpicker in circular', 'modifier-for-display-colors-labels-variations' ),
+			'two_color_desc' 	=> __( 'Description after two colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'tooltip_two_color' => __( 'Tooltip above two colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'image'       		=> __( 'Image', 'modifier-for-display-colors-labels-variations' ),
+			'round_image' 		=> __( 'Image in circular', 'modifier-for-display-colors-labels-variations' ),
+			'tooltip_image' 	=> __( 'Tooltip above image', 'modifier-for-display-colors-labels-variations' ),
+			'desc_image' 		=> __( 'Description after image', 'modifier-for-display-colors-labels-variations' ),
+			'label'			 	=> __( 'Label', 'modifier-for-display-colors-labels-variations' )
 		) );
 	}
 }
