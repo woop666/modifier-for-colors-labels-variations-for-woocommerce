@@ -42,14 +42,18 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             add_action('admin_enqueue_scripts', array($this, 'enqueue'));
 
             //Add Plugin Panel +++
-            //add_action( 'admin_menu', array( $this, 'register_panel'));
-
+            add_action( 'admin_menu', array( $this, 'register_panel'));
 
             // Loaded +++
             do_action( 'dclv_loaded' );
 
-        }
+            // Add new field for attributes 
+            add_action('woocommerce_after_add_attribute_fields', array($this, 'print_attribute_field_options'), 10, 1);
 
+            // add the action 
+            add_action( 'woocommerce_admin_attribute_types', array($this, 'action_woocommerce_admin_attribute_types'), 10, 1); 
+
+        }
 
         /**
          * Enqueue static content +++
@@ -104,6 +108,27 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             do_action('dclv_print_attribute_field', $attribute->attribute_type, false );
         }
 
+         /**
+         * Print new attribute field after all options for each product  +++
+         *
+         * @access public
+         * @since 1.0.0
+         */
+        public function print_attribute_field_options(){
+
+            echo'<div class="form-field">
+                <label for="special_options">Special options</label>
+                <select name="special_options" id="special_options">
+                    <option value="circular">In circular</option>
+                    <option value="description">Description after</option>
+                    <option value="tooltip">Tooltip top</option>
+                    <p class="description">
+                    </p>
+                </select>
+            </div>';
+
+        }
+
         /**
          * Edit field for each product attribute taxonomy +++
          *
@@ -134,25 +159,12 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             $type = $attribute->attribute_type;
             $custom_types = dclv_get_custom_tax_types();
 
-            switch ($type) {
-                case 'two_colorpicker':
-                    $form_costom_types = $custom_types['two_colorpicker'];
-                    break;
-                case 'image':
-                    $form_costom_types = $custom_types['image'];
-                    break;
-                case 'label':
-                    $form_costom_types = $custom_types['label'];
-                    break;
-                case 'colorpicker':
-                    $form_costom_types = $custom_types['colorpicker'];
-                    break;
-            }
+            $name_type = ucfirst($type);
 
             if($type == 'two_colorpicker'){
                 $values = substr($value, 0, 7);
                 $values2 = substr($value, 7, 14);
-            }elseif($type == 'colorpicker'){
+            }elseif($type ==  'colorpicker'){
                 $values = substr($value, 0, 7);
             }else{
                 $values = $value;
@@ -160,14 +172,15 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             
             if( $table ): ?>
              <tr class="form-field">
-                <th scope="row" valign="top" ><label for="term-value"><?php echo $form_costom_types; ?></label></th>
+                <th scope="row" valign="top" ><label for="term-value"><?php echo $name_type; ?></label></th>
                 <td>
             <?php else: ?>
             <div class="form-field">
-                <label for="term-value"><?php $form_costom_types; ?></label>
+                <label for="term-value"><?php $name_type; ?></label>
             <?php endif ?>
 
             <input type="text" name="term-value" id="term-value" value="<?php if ($values) echo $values  ?>" data-type="<?php echo $type ?>" />
+
             <input type="text" hidden="true" name="custom_types" value="<?php echo $type ?>" />
 
                 <?php if( $type == 'two_colorpicker' ){ ?>
@@ -176,6 +189,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
                 <?php }?>
 
              <?php
+             // delete letter
              echo "print_fanction_field <br/>";
              var_dump($values); 
              var_dump($values2); 
@@ -282,7 +296,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
         protected function _print_attribute_column( $value, $type ) {
             $output = '';
 
-            if( $type == 'colorpicker' ) {
+            if( $type ==  'colorpicker') {
                 $output = '<span class="dclv-color" style="background-color:'. $value .'"></span>';
             } elseif($type == 'two_colorpicker'){
                 $values = substr($value, 0, 7);
@@ -291,7 +305,8 @@ if( !class_exists( 'DCLV_Admin' ) ) {
                 $output = '<span class="dclv-color" style="background:linear-gradient(135deg, '. $values .' 51%, '. $values2 .' 51%);"></span>';
             } elseif( $type == 'label' ) {
                 $output = '<span class="dclv-label">'. $value .'</span>';
-            } elseif( $type == 'image' ) {
+            } elseif( $type == 'image' || $type == 'image_in_circular' 
+                || $type == 'description_after_image' || $type == 'tooltip_after_image' ) {
                 $output = '<img class="dclv-image" src="'. $value .'" alt="" />';
             }
 
@@ -307,7 +322,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
         function product_option_terms( $tax, $i ) {
             global $woocommerce, $thepostid;
 
-            if( in_array( $tax->attribute_type, array( 'colorpicker', 'two_colorpicker', 'image', 'label' ) ) ) {
+            if( in_array( $tax->attribute_type, array('colorpicker', 'two_colorpicker', 'image',  'label') ) ) {
 
                 if ( function_exists('wc_attribute_taxonomy_name') ) {
                     $attribute_taxonomy_name = wc_attribute_taxonomy_name( $tax->attribute_name );
@@ -369,20 +384,42 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             return $all_terms;
         }
 
+
+        // define the woocommerce_admin_attribute_types callback 
+        function action_woocommerce_admin_attribute_types() { 
+            // make action magic happen here... 
+            echo '<option value="jojo" >jojo</option>';
+        }
+                 
         
         /**
          * Register Panel +++
          *
-         
+        */ 
         public function register_panel() {
             add_menu_page( 'Modifier for color labels', 'modifier for labels', 'manage_options', 'MFDCLV',  array( $this, 'dclv_view_admin_page' ), '', null );
         }
 
         public function dclv_view_admin_page(){
-            echo "woop hello!";
+            global $wpdb;
+            $attribute = ['colorpicker', 'two_colorpicker', 'image'];
+            $query_attr = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_type = '$attribute[0]' OR attribute_type = '$attribute[1]' OR attribute_type = '$attribute[2]'" );
 
-            echo "<select></select>";
+            foreach ($query_attr as $val) {
+                echo"
+                 <table>
+                    <tbody>
+                        <tr>
+                            <td>$val->attribute_id</td>
+                            <td>$val->attribute_name</td>
+                            <td>$val->attribute_type</td>
+                            <td></td>
+                        </tr>
+                    </tbody>    
+                </table>";
+            }
+            echo "<button id='submit' class='button button-primary'>Save options</button>";
         }
-        */
+        
     }
 }

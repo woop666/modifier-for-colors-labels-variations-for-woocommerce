@@ -36,10 +36,10 @@ if( ! function_exists( 'dclv_check_wc_version' ) ) {
 if( ! function_exists( 'dclv_get_custom_tax_types' ) ) {
 	function dclv_get_custom_tax_types() {
 		return apply_filters( 'dclv_get_custom_tax_types', array(
-			'colorpicker' 	  => __( 'Colorpicker', 'modifier-for-display-colors-labels-variations' ),
-			'two_colorpicker' => __( 'Two_colorpicker', 'modifier-for-display-colors-labels-variations' ),
-			'image'           => __( 'Image', 'modifier-for-display-colors-labels-variations' ),
-			'label'           => __( 'Label', 'modifier-for-display-colors-labels-variations' )
+			'colorpicker' 	  					=> __( 'Colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'two_colorpicker' 					=> __( 'Two colorpicker', 'modifier-for-display-colors-labels-variations' ),
+			'image'           					=> __( 'Image', 'modifier-for-display-colors-labels-variations' ),
+			'label'          			   		=> __( 'Label', 'modifier-for-display-colors-labels-variations' )
 		) );
 	}
 }

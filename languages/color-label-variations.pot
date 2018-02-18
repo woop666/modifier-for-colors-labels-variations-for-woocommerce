@@ -63,14 +63,14 @@ msgid ""
 "Variations while you are using the premium one."
 msgstr ""
 
-#: ../templates/single-product/add-to-cart/variable-wccl.php:39
+#: ../templates/single-product/add-to-cart/variable.php:39
 msgid "This product is currently out of stock and unavailable."
 msgstr ""
 
-#: ../templates/single-product/add-to-cart/variable-wccl.php:57
+#: ../templates/single-product/add-to-cart/variable.php:57
 msgid "Choose an option"
 msgstr ""
 
-#: ../templates/single-product/add-to-cart/variable-wccl.php:103
+#: ../templates/single-product/add-to-cart/variable.php:103
 msgid "Clear selection"
 msgstr ""

@@ -41,6 +41,7 @@ if ( ! defined( 'DCLV_DIR' ) ) {
 }
 if ( ! defined( 'DCLV_VERSION' ) ) {
 	define( 'DCLV_VERSION', '1.0.0' );
+
 }
 
 function dclv_constructor() {
@@ -58,6 +59,44 @@ function dclv_constructor() {
     // Let's start the game!
     global $dclv;
     $dclv = new DCLV();
-}
-add_action( 'plugins_loaded', 'dclv_constructor' );
 
+
+}
+
+// function add_new_table(){
+//     global $wpdb;
+//     $charset_collate = $wpdb->get_charset_collate();
+//     $table_name = $wpdb->prefix . 'dclw_option_attributs';
+    
+
+//     $sql = "CREATE TABLE $table_name(
+//         id mediumint(8) NOT NULL AUTO_INCREMENT,
+//         attribute_name mediumint(10) NOT NULL,
+//         options varchar(55) NOT NULL,
+//         UNIQUE KEY  id (id)
+//         ) $charset_collate;";
+
+//     require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
+
+//     if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name){
+//         dbDelta($sql);
+//     }
+// }
+
+function add_field_to_woocommerce_attribute_taxonomies(){
+    global $wpdb;
+    $charset_collate = $wpdb->get_charset_collate();
+    $table_name = $wpdb->prefix . 'woocommerce_attribute_taxonomies';
+
+    $results = $wpdb->get_results( "SELECT * FROM $table_name" );
+    $max_length = $wpdb->get_col_info('max_length', 3);
+
+    if($max_length < 21){
+      $wpdb->query("ALTER TABLE $table_name MODIFY `attribute_type` VARCHAR(65)");
+    }
+    
+}
+
+add_action('plugins_loaded', 'dclv_constructor' );
+//add_action('plugins_loaded', 'add_new_table');
+add_action('plugins_loaded', 'add_field_to_woocommerce_attribute_taxonomies');

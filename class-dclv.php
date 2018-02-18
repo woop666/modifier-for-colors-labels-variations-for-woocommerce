@@ -32,8 +32,6 @@ if( !class_exists( 'DCLV' ) ) {
             // actions
             add_action( 'init', array( $this, 'init' ) );
 
-            add_action( 'plugins_loaded', array( $this, 'plugin_loader' ), 15 );
-
             if( is_admin() ) {
                 $this->obj = new DCLV_Admin( DCLV_VERSION );
             }  else {
@@ -42,6 +40,7 @@ if( !class_exists( 'DCLV' ) ) {
 
             // add new attribute types
             add_filter( 'product_attributes_type_selector', array( $this, 'attribute_types' ), 10, 1 );
+
         }
 
         /**
@@ -52,6 +51,8 @@ if( !class_exists( 'DCLV' ) ) {
             $custom = dclv_get_custom_tax_types();
             return is_array( $custom ) ? array_merge( $default_type, $custom ) : $default_type;
         }
+
+
 
         /**
          * Init method

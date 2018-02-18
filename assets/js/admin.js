@@ -16,6 +16,12 @@ jQuery(function($){
         });
     }).trigger('dclv_two_colorpicker');
 
+    $(document).on('two_colorpicker_in_circular', function(){
+        $('[data-type="two_colorpicker_in_circular"]').each(function(){
+            $(this).wpColorPicker();
+        });
+    }).trigger('two_colorpicker_in_circular');
+
     $(document).on('dclv_upload', function(){
         $('[data-type="image"]').each(function(){
             var button = $("<input type='button' name='' id='term-value_button' class='button' value='Upload' />");

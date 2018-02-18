@@ -68,7 +68,7 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
             $wc_get_template = function_exists('wc_get_template') ? 'wc_get_template' : 'woocommerce_get_template';
 
             // Load the template
-            $wc_get_template( 'single-product/add-to-cart/variable-wccl.php', array(
+            $wc_get_template( 'single-product/add-to-cart/variable.php', array(
                 'available_variations'  => $product->get_available_variations(),
                 'attributes'   			=> $attributes,
                 'selected_attributes' 	=> $selected_attributes,
@@ -127,8 +127,12 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
         public function single_variation() {
 
             global $product, $woocommerce;
+
+            if( version_compare( preg_replace( '/-beta-([0-9]+)/', '', $woocommerce->version ), '2.4', '>=' ) ) {
+                return;
+            }
                 
-            $product_id =  $product->get_id();
+            $product_id = dclv_check_wc_version( '2.6', '>=' ) ? $product->get_id() : $product->id;
             
             ob_start();
 
