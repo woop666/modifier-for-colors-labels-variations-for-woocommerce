@@ -111,12 +111,18 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
         public function enqueue_static() {
             global $post, $woocommerce;
 
-			wp_register_script( 'dclv_frontend', DCLV_URL . 'assets/js/frontend.js', array('jquery', 'wc-add-to-cart-variation'), $this->version, true );
+			wp_register_script( 'dclv_frontend', DCLV_URL . 'assets/js/frontend.js', array('jquery', 'tooltipster', 'wc-add-to-cart-variation'), $this->version, true );
+            wp_register_script( 'tooltipster', DCLV_URL . 'assets/js/tooltipster.bundle.min.js', array('jquery'), $this->version, true );
 			wp_register_style( 'dclv_frontend', DCLV_URL . 'assets/css/frontend.css', false, $this->version );
+            wp_register_style( 'dclv_tooltipster', DCLV_URL . 'assets/css/tooltipster.bundle.min.css', false, $this->version );
+            wp_register_style( 'dclv_tooltipster-sideTip-borderless', DCLV_URL . 'assets/css/tooltipster-sideTip-borderless.min.css', false, $this->version );
 
             if( is_product() || ( ! empty( $post->post_content ) && strstr( $post->post_content, '[product_page' ) ) ) {
-                wp_enqueue_script( 'dclv_frontend' );
-                wp_enqueue_style( 'dclv_frontend' );
+                wp_enqueue_script('tooltipster');
+                wp_enqueue_script('dclv_frontend');
+                wp_enqueue_style('dclv_frontend');
+                wp_enqueue_style('dclv_tooltipster');
+                wp_enqueue_style('dclv_tooltipster-sideTip-borderless');
             }
         }
 

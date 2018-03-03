@@ -117,7 +117,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             $attribute = $wpdb->get_row( "SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute'" );
             
             $value = dclv_get_term_meta( $term->term_id, $taxonomy . '_dclv_value' );
-            //var_dump($value);
+
             do_action('dclv_print_attribute_field', $attribute, $value, 1);
         }
 
@@ -130,16 +130,19 @@ if( !class_exists( 'DCLV_Admin' ) ) {
          */
         public function print_attribute_type($attribute, $value = '', $table = 0){
 
-            $type = $attribute->attribute_type;
+            isset($attribute->attribute_type)? $type = $attribute->attribute_type : $type = $attribute;
+            
             $custom_types = dclv_get_custom_tax_types();
 
             $name_type = ucfirst($type);
 
-            if($type == 'two_colorpicker'){
+            if($type == 'two_colorpicker' || $type == 'two_color_desc' || $type == 'round_two_color' || $type == 'tooltip_two_color' ){
                 $values = substr($value, 0, 7);
                 $values2 = substr($value, 7, 14);
-            }elseif($type ==  'colorpicker'){
+                $type = 'two_colorpicker';
+            }elseif($type == 'colorpicker' || $type == 'round_color' || $type == 'tooltip_color' || $type == 'color_desc' ){
                 $values = substr($value, 0, 7);
+                $type = 'colorpicker';
             }else{
                 $values = $value;
             }
@@ -157,22 +160,11 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
             <input type="text" hidden="true" name="custom_types" value="<?php echo $type ?>" />
 
-                <?php if( $type == 'two_colorpicker' ){ ?>
+                <?php if( $type == 'two_colorpicker'){ ?>
                     <input type="text" name="term-value2" id="term-value2" value="<?php if ($values2) echo $values2  ?>" data-type="<?php echo $type ?>" />
                      </tr>
                 <?php }?>
-
-             <?php
-             // delete letter
-             // echo "print_fanction_field <br/>";
-             // var_dump($values); 
-             // var_dump($values2); 
-             // var_dump($type); 
-
-
-             ?>
-
-
+            <br/>
             <?php if( $table ): ?>
                 </td>
                 </tr>
@@ -270,18 +262,26 @@ if( !class_exists( 'DCLV_Admin' ) ) {
         protected function _print_attribute_column( $value, $type ) {
             $output = '';
 
-            if( $type ==  'colorpicker') {
+            //chenge in switch
+            if( $type == 'colorpicker'  || $type == 'tooltip_color' || $type == 'color_desc') {
                 $output = '<span class="dclv-color" style="background-color:'. $value .'"></span>';
-            } elseif($type == 'two_colorpicker'){
+            } elseif($type == 'round_color'){
+                $output = '<span class="dclv-color dclv-round" style="background-color:'. $value .'"></span>';
+            }elseif($type == 'two_colorpicker' || $type == 'two_color_desc' || $type == 'tooltip_two_color'){
                 $values = substr($value, 0, 7);
                 $values2 = substr($value, 7, 14);
-
                 $output = '<span class="dclv-color" style="background:linear-gradient(135deg, '. $values .' 51%, '. $values2 .' 51%);"></span>';
-            } elseif( $type == 'label' ) {
+            } elseif($type == 'round_two_color'){
+                $values = substr($value, 0, 7);
+                $values2 = substr($value, 7, 14);
+                $output = '<span class="dclv-color dclv-round" style="background:linear-gradient(135deg, '. $values .' 51%, '. $values2 .' 51%);"></span>';
+            }elseif( $type == 'label' ) {
                 $output = '<span class="dclv-label">'. $value .'</span>';
-            } elseif( $type == 'image' || $type == 'image_in_circular' 
-                || $type == 'description_after_image' || $type == 'tooltip_after_image' ) {
+            }elseif( $type == 'image' || $type == 'tooltip_image' 
+                || $type == 'desc_image') {
                 $output = '<img class="dclv-image" src="'. $value .'" alt="" />';
+            }elseif ($type == 'round_image') {
+                $output = '<img class="dclv-image dclv-round-img" src="'. $value .'" alt="" />';
             }
 
             return $output;
@@ -296,7 +296,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
         function product_option_terms( $tax, $i ) {
             global $woocommerce, $thepostid;
 
-            if( in_array( $tax->attribute_type, array('colorpicker', 'two_colorpicker', 'image',  'label') ) ) {
+            if( in_array( $tax->attribute_type, array('colorpicker', 'two_colorpicker', 'image', 'round_color', 'round_two_color', 'round_image', 'color_desc', 'tooltip_color', 'two_color_desc', 'tooltip_two_color', 'tooltip_image', 'desc_image', 'label') ) ) {
 
                 if ( function_exists('wc_attribute_taxonomy_name') ) {
                     $attribute_taxonomy_name = wc_attribute_taxonomy_name( $tax->attribute_name );

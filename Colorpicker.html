@@ -3,60 +3,45 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+
+<link rel="stylesheet" href="assets/css/tooltipster.bundle.min.css" />
+<link rel="stylesheet" href="assets/css/tooltipster-sideTip-borderless.min.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script src="assets/js/tooltipster.bundle.min.js" type="text/javascript"></script>
+ 
 </head>
+
 <body>
-colorpicker Colorpicker
-colorpicker_in_circular Colorpicker in circular
-description_after_colorpicker Description after colorpicker
-tooltip_after_colorpicker Tooltip after colorpicker
-two_colorpicker Two colorpicker
-two_colorpicker_in_circular Two colorpicker in circular
-description_after_two_colorpicker Description after two colorpicker
-tooltip_after_two_colorpicker Tooltip after two colorpicker
-image Image
-image_in_circular Image in circular
-description_after_image Description after image
-tooltip_after_image Tooltip after image
-label Label
 
-	
+
+<br><br>
+<img src="my-image.png" class="sdfsdf  dfgdfg dfgdfteegdfg" title="This is my image's tooltip message!" />
+<!-- <button class="tooltip" titile="lol" style="pointer-events: none;" type="button" disabled>Disabled button</button> -->
+<div class="sdfsdf" title="This is my span's tooltip message!">Some text</div>
+
+
 </body>
-<?php
+<script>
 
-//круг
-'round_color' => __( 'Colorpicker in circular', 'modifier-for-display-colors-labels-variations' ),
-'round_two_color' => __( 'Two colorpicker in circular', 'modifier-for-display-colors-labels-variations' ),
-'round_image' => __( 'Image in circular', 'modifier-for-display-colors-labels-variations' ),
-//цвет весь
-'color_desc' => __( 'Description after colorpicker', 'modifier-for-display-colors-labels-variations' ),
-'tooltip_color' => __( 'Tooltip above colorpicker', 'modifier-for-display-colors-labels-variations' ),
-//all 2color
-'two_color_desc' => __( 'Description after two colorpicker', 'modifier-for-display-colors-labels-variations' ),
-'tooltip_two_color' => __( 'Tooltip above two colorpicker', 'modifier-for-display-colors-labels-variations' ),
-//all img
-'tooltip_image' => __( 'Tooltip above image', 'modifier-for-display-colors-labels-variations' ),
-'desc_image' => __( 'Description after image', 'modifier-for-display-colors-labels-variations' ),
+    function zalupa(one, two, thrae){
+        if(thrae){
+            thrae = 'cool';
+        }
+        var o = [];
+        o.push(one);
+        o.push(two);
+        o.push(thrae);
+        console.log(o);
+    }
 
-
-if($type == 'two_colorpicker' || 'two_colorpicker_in_circular' || 'description_after_two_colorpicker' || 'tooltip_after_two_colorpicker'){
-                $values = substr($value, 0, 7);
-                $values2 = substr($value, 7, 14);
-            }elseif($type == 'colorpicker' || 'colorpicker_in_circular' || 'description_after_colorpicker' || 'tooltip_after_colorpicker'){
-                $values = substr($value, 0, 7);
-            }else{
-                $values = $value;
-            }
-
-?>
+    zalupa('one','two');
+    zalupa('one','two', 'thrae');
+    
+    $(document).ready(function(){
+        $(".dclv-tooltip").tooltipster({
+            theme: 'tooltipster-borderless'
+        });
+    });
+    $('div, img').addClass('dclv-tooltip');
+</script>
 </html>
-
-'colorpicker', 'colorpicker_in_circular', 'description_after_colorpicker', 'tooltip_after_colorpicker', 'two_colorpicker', 'two_colorpicker_in_circular', 'description_after_two_colorpicker', 'tooltip_after_two_colorpicker', 'image', 'image_in_circular', 'description_after_image', 'tooltip_after_image', 'label'
-
-array(6) { 
-
-[0]=> object(stdClass)#1503 (6) 
-{ ["attribute_id"]=> string(1) "2" ["attribute_name"]=> string(5) "color" ["attribute_label"]=> string(9) "Color car" ["attribute_type"]=> string(11) "colorpicker" ["attribute_orderby"]=> string(10) "menu_order" ["attribute_public"]=> string(1) "0" } 
-
-[1]=> object(stdClass)#1502 (6) 
-
-{ ["attribute_id"]=> string(1) "6" ["attribute_name"]=> string(4) "test" ["attribute_label"]=> string(19) "Test_two_colorpicer" ["attribute_type"]=> string(15) "two_colorpicker" ["attribute_orderby"]=> string(10) "menu_order" ["attribute_public"]=> string(1) "0" } [2]=> object(stdClass)#1501 (6) { ["attribute_id"]=> string(1) "7" ["attribute_name"]=> string(5) "test2" ["attribute_label"]=> string(5) "test2" ["attribute_type"]=> string(11) "colorpicker" ["attribute_orderby"]=> string(10) "menu_order" ["attribute_public"]=> string(1) "0" } [3]=> object(stdClass)#1500 (6) { ["attribute_id"]=> string(1) "8" ["attribute_name"]=> string(9) "yimt_test" ["attribute_label"]=> string(9) "YIMT_test" ["attribute_type"]=> string(11) "colorpicker" ["attribute_orderby"]=> string(10) "menu_order" ["attribute_public"]=> string(1) "0" } [4]=> object(stdClass)#1499 (6) { ["attribute_id"]=> string(2) "11" ["attribute_name"]=> string(8) "test-img" ["attribute_label"]=> string(8) "test img" ["attribute_type"]=> string(5) "image" ["attribute_orderby"]=> string(10) "menu_order" ["attribute_public"]=> string(1) "0" } [5]=> object(stdClass)#1498 (6) { ["attribute_id"]=> string(2) "16" ["attribute_name"]=> string(3) "lol" ["attribute_label"]=> string(3) "lol" ["attribute_type"]=> string(11) "colorpicker" ["attribute_orderby"]=> string(10) "menu_order" ["attribute_public"]=> string(1) "0" } } 

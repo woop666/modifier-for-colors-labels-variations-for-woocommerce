@@ -27,6 +27,12 @@
     padding: 2px;
 }
 
+.dclv-round {
+    border-radius: 20px;
+}
+.dclv-round-img{
+    border-radius: 10px;
+}
 .dclv-image {
     width: 50px;
 }

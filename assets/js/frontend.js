@@ -2,6 +2,8 @@
 *
 */
 
+
+
 (function ($, window, document) {
 
     $.fn.dclv = function () {
@@ -28,13 +30,14 @@
 
                 t.removeData('last_content');
 
+                
+
                 t.find('option').each(function () {
                     if ( $(this).data('value') ) {
                         var classes = 'select_option_' + type + ' select_option';
                         var value = $(this).data('value');
                         var o = $(this);
-
-                        console.log(value);
+                        var desc = $(this).attr('value');
 
                         var option = $('<div/>', {
                             'class': classes
@@ -50,24 +53,105 @@
                                     t.val(o.val()).change();
                                 }
                             });
+                        var addOption = true;
 
-                        if (type == 'colorpicker') {
-                            option.append($('<span/>', {
+                        function colorpicker(option, value, addOption){
+                            if(addOption){
+                                option.append($('<span/>', {
+                                    'css': {
+                                        'background': value,
+                                        "border-radius": "20px"
+                                    }
+                                }));
+                            }else{
+                                option.append($('<span/>', {
+                                    'css': {
+                                        'background': value,
+                                    }
+                                }));
+                            }
+                            
+                        }
+
+                        function tooltip_(option, desc){
+                            option.attr('title', desc ).tooltipster({
+                                theme: 'tooltipster-borderless'
+                            });
+                        }
+
+
+                        function wrap(option){
+                            option.wrap('<div></div>');
+                        }
+
+                        function two_color_(option, value, addOption){
+                            if(addOption){
+                              option.append($('<span/>', {
                                 'css': {
-                                    'background': value,
-                                }
-                            }));
-                        }else if (type == 'two_colorpicker') {
+                                    'background': 'linear-gradient(135deg, ' + value.substr(0, 7) + ' 51%, ' + value.substr(7, 14) + ' 51%)',
+                                    "border-radius": "20px"
+                                    }
+                                }));  
+                          }else{
                             option.append($('<span/>', {
                                 'css': {
                                     'background': 'linear-gradient(135deg, ' + value.substr(0, 7) + ' 51%, ' + value.substr(7, 14) + ' 51%)',
-                                }
-                            }));
-                        } else if (type == 'image') {
+                                    }
+                                }));
+                          }
+                        }
+
+                        function description(option, desc, className){
+                            option.parent().append('<p class="'+className+'">' +desc+ '</p>');
+                        }
+
+                        function borderRadius(option){
+                            option[0].style.borderRadius = '20px';
+                        }
+
+                        function img_value(option, value){
                             option.append($('<img/>', {
                                 'src': value
                             }));
-                        } else if (type == 'label') {
+                        }
+
+                        
+                        if (type == 'colorpicker') {
+                            colorpicker(option, value);
+                        }else if(type == 'round_color'){
+                            borderRadius(option);
+                            colorpicker(option, value, addOption);
+                        }else if(type == 'color_desc'){
+                            wrap(option);
+                            description(option, desc, 'desc');
+                            colorpicker(option, value);
+                        }else if(type == 'tooltip_color'){
+                            colorpicker(option, value);
+                            tooltip_(option, desc);
+                        }else if (type == 'two_colorpicker') {
+                            two_color_(option, value);
+                        }else if (type == 'round_two_color') {
+                            borderRadius(option);
+                            two_color_(option, value, addOption);
+                        }else if (type == 'two_color_desc'){
+                            wrap(option);
+                            description(option, desc, 'desc');
+                            two_color_(option, value);
+                        }else if(type == 'tooltip_two_color'){
+                            two_color_(option, value);
+                            tooltip_(option, desc);
+                        }else if (type == 'image') {
+                            img_value(option, value);
+                        }else if (type == 'round_image'){
+                            img_value(option, value);
+                        }else if(type == 'desc_image'){
+                            wrap(option);
+                            description(option, desc, 'desc_img');
+                            img_value(option, value);
+                        }else if(type == 'tooltip_image'){
+                            img_value(option, value);
+                            tooltip_(option, desc);
+                        }else if (type == 'label') {
                             option.append($('<span/>', {
                                 'text': value
                             }));
@@ -162,8 +246,6 @@
         });
 
         select.trigger('focusin');
-
     });
 
 })(jQuery, window, document);
-

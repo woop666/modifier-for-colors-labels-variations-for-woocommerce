@@ -1,4 +1,11 @@
 .select_box:after{clear:both;content:".";display:block;height:0;visibility:hidden;margin-bottom:5px;}
 .select_option{float:left;border:1px solid #d6d3d3;margin-right:3px;}
-.select_option:hover, .select_option.selected{border-color:#999595}
+.select_option:hover, .select_option.selected{border-color:#092575}
 .select_option span,.select_option img{border:2px solid #fff;display:block;width:27px;height:27px;text-decoration:none;line-height:27px;text-align:center;cursor:pointer;}
+.select_option_round_image:hover, .select_option_desc_image:hover{border-width: 1px;}
+.select_option_round_image{border-radius: 25px;}
+.select_option_round_image img {width: 50px;height: 50px;}
+.select_option_desc_image img {width: 60px; height: 60px;}
+.select_option_round_image img {border-radius: 30px;}
+.desc{margin-bottom: 10px;}
+.desc_img{margin-bottom: 25px;padding-top: 20px;}

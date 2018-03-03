@@ -5,25 +5,13 @@
 jQuery(function($){
 
     $(document).on('dclv_colorpicker', function(){
-        $('[data-type="colorpicker"]').each(function(){
+        $('[data-type*="color"]').each(function(){
             $(this).wpColorPicker();
         });
     }).trigger('dclv_colorpicker');
 
-    $(document).on('dclv_two_colorpicker', function(){
-        $('[data-type="two_colorpicker"]').each(function(){
-            $(this).wpColorPicker();
-        });
-    }).trigger('dclv_two_colorpicker');
-
-    $(document).on('two_colorpicker_in_circular', function(){
-        $('[data-type="two_colorpicker_in_circular"]').each(function(){
-            $(this).wpColorPicker();
-        });
-    }).trigger('two_colorpicker_in_circular');
-
     $(document).on('dclv_upload', function(){
-        $('[data-type="image"]').each(function(){
+        $('[data-type*="image"]').each(function(){
             var button = $("<input type='button' name='' id='term-value_button' class='button' value='Upload' />");
             button.insertAfter(this);
 
