@@ -1,4 +1,4 @@
-#dclv_value {
+#mclv_value {
     width: 70px;
 }
 
@@ -14,8 +14,8 @@
     float: left;
 }
 
-.dclv-color,
-.dclv-label {
+.mclv-color,
+.mclv-label {
     border: 1px solid #ccc;
     background: #fff;
     display: inline-block;
@@ -27,12 +27,12 @@
     padding: 2px;
 }
 
-.dclv-round {
+.mclv-round {
     border-radius: 20px;
 }
-.dclv-round-img{
+.mclv-round-img{
     border-radius: 10px;
 }
-.dclv-image {
+.mclv-image {
     width: 50px;
 }

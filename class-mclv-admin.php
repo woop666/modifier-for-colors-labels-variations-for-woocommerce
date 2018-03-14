@@ -4,16 +4,16 @@
  *
  */
 
-if ( !defined( 'DCLV' ) ) { exit; } // Exit if accessed directly
+if ( !defined( 'MCLV' ) ) { exit; } // Exit if accessed directly
 
-if( !class_exists( 'DCLV_Admin' ) ) {
+if( !class_exists( 'MCLV_Admin' ) ) {
     /**
      * Admin class.
      * The class manage all the admin behaviors.
      *
      * @since 1.0.0
      */
-    class DCLV_Admin {
+    class MCLV_Admin {
         /**
          * Constructor
          *
@@ -25,45 +25,42 @@ if( !class_exists( 'DCLV_Admin' ) ) {
         public function __construct( $version ) {
             $this->version      = $version;
             
-            //product attribute taxonomies +++
+            //product attribute taxonomies 
             add_action('init', array($this, 'attribute_taxonomies'));
 
-            //print attribute field type +++
-            add_action('dclv_print_attribute_field', array($this, 'print_attribute_type'), 10, 3);
+            //print attribute field type 
+            add_action('mclv_print_attribute_field', array($this, 'print_attribute_type'), 10, 3);
 
-            //save new term +++
+            //save new term 
             add_action('created_term', array($this, 'attribute_save'), 10, 3);
             add_action('edit_term', array($this, 'attribute_save'), 10, 3);
 
-            //choose variations in product page +++
+            //choose variations in product page 
             add_action('woocommerce_product_option_terms', array($this, 'product_option_terms'), 10, 2);
 
-            //enqueue static content +++
+            //enqueue static content 
             add_action('admin_enqueue_scripts', array($this, 'enqueue'));
 
-            //Add Plugin Panel +++
-            //add_action( 'admin_menu', array( $this, 'register_panel'));
-
-            // Loaded +++
-            do_action( 'dclv_loaded' ); 
+            // Loaded 
+            do_action( 'mclv_loaded' ); 
 
         }
 
         /**
-         * Enqueue static content +++
+         * Enqueue static content 
          */
         public function enqueue() {
             global $pagenow;
 
             if( in_array( $pagenow, array( 'term.php', 'edit-tags.php' ) ) && isset( $_GET['post_type'] ) && 'product' == $_GET['post_type'] ) {
                 wp_enqueue_media();
-                wp_enqueue_style( 'yith-wccl-admin', DCLV_URL . '/assets/css/admin.css', array('wp-color-picker'), $this->version );
-                wp_enqueue_script( 'yith-wccl-admin', DCLV_URL . '/assets/js/admin.js', array('jquery', 'wp-color-picker' ), $this->version, true );
+                wp_enqueue_style( 'yith-wccl-admin', MCLV_URL . '/assets/css/admin.css', array('wp-color-picker'), $this->version );
+                wp_enqueue_script( 'yith-wccl-admin', MCLV_URL . '/assets/js/admin.js', array('jquery', 'wp-color-picker' ), $this->version, true );
             }
         }
 
         /**
-         * Init product attribute taxonomies +++
+         * Init product attribute taxonomies 
          *
          * @access public
          * @since 1.0.0
@@ -88,7 +85,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
 
         /**
-         * Add field for each product attribute taxonomy +++
+         * Add field for each product attribute taxonomy 
          *
          * @access public
          * @since 1.0.0
@@ -99,12 +96,12 @@ if( !class_exists( 'DCLV_Admin' ) ) {
             $attribute = substr($taxonomy, 3);
             $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute'");
             
-            do_action('dclv_print_attribute_field', $attribute->attribute_type, false );
+            do_action('mclv_print_attribute_field', $attribute->attribute_type, false );
         }
 
 
         /**
-         * Edit field for each product attribute taxonomy +++
+         * Edit field for each product attribute taxonomy 
          *
          * @access public
          * @since 1.0.0
@@ -116,14 +113,14 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
             $attribute = $wpdb->get_row( "SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute'" );
             
-            $value = dclv_get_term_meta( $term->term_id, $taxonomy . '_dclv_value' );
+            $value = mclv_get_term_meta( $term->term_id, $taxonomy . '_mclv_value' );
 
-            do_action('dclv_print_attribute_field', $attribute, $value, 1);
+            do_action('mclv_print_attribute_field', $attribute, $value, 1);
         }
 
 
         /**
-         * Print Color Picker Type HTML +++
+         * Print Color Picker Type HTML 
          *
          * @access public
          * @since 1.0.0
@@ -132,17 +129,16 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
             isset($attribute->attribute_type)? $type = $attribute->attribute_type : $type = $attribute;
             
-            $custom_types = dclv_get_custom_tax_types();
-
+            $custom_types = mclv_get_custom_tax_types();
             $name_type = ucfirst($type);
+            $re = '/two/';
 
-            if($type == 'two_colorpicker' || $type == 'two_color_desc' || $type == 'round_two_color' || $type == 'tooltip_two_color' ){
+            preg_match_all($re, $type, $matches, PREG_SET_ORDER, 0);
+
+            if($matches){
                 $values = substr($value, 0, 7);
                 $values2 = substr($value, 7, 14);
                 $type = 'two_colorpicker';
-            }elseif($type == 'colorpicker' || $type == 'round_color' || $type == 'tooltip_color' || $type == 'color_desc' ){
-                $values = substr($value, 0, 7);
-                $type = 'colorpicker';
             }else{
                 $values = $value;
             }
@@ -160,11 +156,11 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
             <input type="text" hidden="true" name="custom_types" value="<?php echo $type ?>" />
 
-                <?php if( $type == 'two_colorpicker'){ ?>
-                    <input type="text" name="term-value2" id="term-value2" value="<?php if ($values2) echo $values2  ?>" data-type="<?php echo $type ?>" />
-                     </tr>
-                <?php }?>
-            <br/>
+            <?php if( $type == 'two_colorpicker'): ?>
+                <input type="text" name="term-value2" id="term-value2" value="<?php if ($values2) echo $values2  ?>" data-type="<?php echo $type ?>" />
+                 </tr>
+            <?php endif ?>
+                <br/>
             <?php if( $table ): ?>
                 </td>
                 </tr>
@@ -176,7 +172,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
 
         /**
-         * Save attribute field +++
+         * Save attribute field 
          *
          * @access public
          * @since 1.0.0
@@ -187,32 +183,17 @@ if( !class_exists( 'DCLV_Admin' ) ) {
                 $type = $_POST['custom_types'];
                 $val = $_POST['term-value'];
 
-
                 if($type == 'two_colorpicker'){
                     $val .= $_POST['term-value2'];
-                    if(preg_match('/[0-9a-z#]{14}/ui', $val)){
-                        $val = substr($val, 0, 14);
-                    }else{
-                        $val = "";
-                    }
-                }elseif($type == 'colorpicker'){
-                     if(preg_match('/[0-9a-z#]{7}/ui', $val)){
-                        $val = substr($val, 0, 7);
-                        }else{
-                            $val = "";
-                        }
-                }elseif($type == 'label'){
-                    $val = sanitize_html_class($val);
-                }elseif($type == 'image'){
-                    $val = esc_url( $val, $protocols = null, $_context = 'display' );
-                }
-                dclv_update_term_meta( $term_id, $taxonomy . '_dclv_value', $val );
+                } 
+                    
+                mclv_update_term_meta( $term_id, $taxonomy . '_mclv_value', $val );
             }
 
         }
 
         /**
-         * Create new column for product attributes +++
+         * Create new column for product attributes 
          *
          * @access public
          * @since 1.0.0
@@ -225,14 +206,14 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
             $temp_cols = array();
             $temp_cols['cb'] = $columns['cb'];
-            $temp_cols['dclv_value'] = __('Value', 'modifier-for-display-colors-labels-variations');
+            $temp_cols['mclv_value'] = __('Value', 'modifier-for-colors-labels-variations-for-woocommerce');
             unset($columns['cb']);
             $columns = array_merge( $temp_cols, $columns );
             return $columns;
         }
 
         /**
-         * Print the column content +++
+         * Print the column content 
          *
          * @access public
          * @since 1.0.0
@@ -240,12 +221,12 @@ if( !class_exists( 'DCLV_Admin' ) ) {
         public function product_attribute_column($columns, $column, $id) {
             global $taxonomy, $wpdb;
 
-            if ($column == 'dclv_value') {
+            if ($column == 'mclv_value') {
                 $attribute = substr($taxonomy, 3);
                 $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute'");
                 $att_type 	= $attribute->attribute_type;
 
-                $value = dclv_get_term_meta( $id, $taxonomy . '_dclv_value' );
+                $value = mclv_get_term_meta( $id, $taxonomy . '_mclv_value' );
                 $columns .= $this->_print_attribute_column( $value, $att_type );
             }
 
@@ -254,49 +235,68 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 
 
         /**
-         * Print the column content according to attribute type +++
+         * Print the column content according to attribute type 
          *
-         * @access public
-         * @since 1.0.0
          */
         protected function _print_attribute_column( $value, $type ) {
             $output = '';
 
-            //chenge in switch
-            if( $type == 'colorpicker'  || $type == 'tooltip_color' || $type == 'color_desc') {
-                $output = '<span class="dclv-color" style="background-color:'. $value .'"></span>';
-            } elseif($type == 'round_color'){
-                $output = '<span class="dclv-color dclv-round" style="background-color:'. $value .'"></span>';
-            }elseif($type == 'two_colorpicker' || $type == 'two_color_desc' || $type == 'tooltip_two_color'){
-                $values = substr($value, 0, 7);
-                $values2 = substr($value, 7, 14);
-                $output = '<span class="dclv-color" style="background:linear-gradient(135deg, '. $values .' 51%, '. $values2 .' 51%);"></span>';
-            } elseif($type == 'round_two_color'){
-                $values = substr($value, 0, 7);
-                $values2 = substr($value, 7, 14);
-                $output = '<span class="dclv-color dclv-round" style="background:linear-gradient(135deg, '. $values .' 51%, '. $values2 .' 51%);"></span>';
-            }elseif( $type == 'label' ) {
-                $output = '<span class="dclv-label">'. $value .'</span>';
-            }elseif( $type == 'image' || $type == 'tooltip_image' 
-                || $type == 'desc_image') {
-                $output = '<img class="dclv-image" src="'. $value .'" alt="" />';
-            }elseif ($type == 'round_image') {
-                $output = '<img class="dclv-image dclv-round-img" src="'. $value .'" alt="" />';
-            }
+            //array with attribute
+            $colorpicker = array('colorpicker', 'tooltip_color', 'color_desc');
+            $two_colorpicker = array('two_colorpicker', 'two_color_desc', 'tooltip_two_color');
+            $image = array('image', 'tooltip_image', 'desc_image');
 
+            //chenge in switch
+            switch ($type) {
+                case ( in_array($type, $colorpicker)):
+                    $output = '<span class="mclv-color" style="background-color:'. $value .'"></span>';
+                    break;
+                case 'round_color':
+                    $output = '<span class="mclv-color mclv-round" style="background-color:'. $value .'"></span>';
+                    break;
+                case ( in_array($type, $two_colorpicker)):
+                    $output = $this->_output_for_print_attribute($value, $new_class = '');
+                    break;
+                case 'round_two_color':
+                    $output = $this->_output_for_print_attribute($value, $new_class = 'mclv-round');
+                    break;
+                case 'label':
+                    $output = '<span class="mclv-label">'. $value .'</span>';
+                    break;
+                case ( in_array($type, $image)):
+                    $output = '<img class="mclv-image" src="'. $value .'" alt="" />';
+                    break;
+                case 'round_image':
+                    $output = '<img class="mclv-image mclv-round-img" src="'. $value .'" alt="" />';
+                    break;
+            }
             return $output;
         }
 
+        /*
+        * Additional function edit 2 color view
+        *
+        *
+        */
+
+        protected function _output_for_print_attribute($value, $new_class){
+            $values = substr($value, 0, 7);
+            $values2 = substr($value, 7, 14);
+            $output = '<span class="mclv-color '.$new_class.'" style="background:linear-gradient(135deg, '. $values .' 51%, '. $values2 .' 51%);"></span>'; 
+            return $output;
+        }
 
         /**
-         * Print select for product variations +++
+         * Print select for product variations 
          *
          *
          */
         function product_option_terms( $tax, $i ) {
             global $woocommerce, $thepostid;
 
-            if( in_array( $tax->attribute_type, array('colorpicker', 'two_colorpicker', 'image', 'round_color', 'round_two_color', 'round_image', 'color_desc', 'tooltip_color', 'two_color_desc', 'tooltip_two_color', 'tooltip_image', 'desc_image', 'label') ) ) {
+            $arr_for_attribute = array('colorpicker', 'two_colorpicker', 'image', 'round_color', 'round_two_color', 'round_image', 'color_desc', 'tooltip_color', 'two_color_desc', 'tooltip_two_color', 'tooltip_image', 'desc_image', 'label');
+
+            if( in_array( $tax->attribute_type, $arr_for_attribute ) ) {
 
                 if ( function_exists('wc_attribute_taxonomy_name') ) {
                     $attribute_taxonomy_name = wc_attribute_taxonomy_name( $tax->attribute_name );
@@ -305,7 +305,7 @@ if( !class_exists( 'DCLV_Admin' ) ) {
                 }
 
                 ?>
-	            <select multiple="multiple" data-placeholder="<?php _e( 'Select terms', 'modifier-for-display-colors-labels-variations' ); ?>" class="multiselect attribute_values wc-enhanced-select" name="attribute_values[<?php echo $i; ?>][]">
+	            <select multiple="multiple" data-placeholder="<?php _e( 'Select terms', 'modifier-for-colors-labels-variations-for-woocommerce' ); ?>" class="multiselect attribute_values wc-enhanced-select" name="attribute_values[<?php echo $i; ?>][]">
 		            <?php
 		            $all_terms = $this->get_terms( $attribute_taxonomy_name );
 		            if ( $all_terms ) {
@@ -315,15 +315,15 @@ if( !class_exists( 'DCLV_Admin' ) ) {
 		            }
 		            ?>
 	            </select>
-                <button class="button plus select_all_attributes"><?php _e( 'Select all', 'modifier-for-display-colors-labels-variations' ); ?></button>
-	            <button class="button minus select_no_attributes"><?php _e( 'Select none', 'modifier-for-display-colors-labels-variations' ); ?></button>
-                <button class="button fr plus add_new_attribute" data-attribute="<?php echo $attribute_taxonomy_name; ?>"><?php _e( 'Add new', 'modifier-for-display-colors-labels-variations' ); ?></button>
+                <button class="button plus select_all_attributes"><?php _e( 'Select all', 'modifier-for-colors-labels-variations-for-woocommerce' ); ?></button>
+	            <button class="button minus select_no_attributes"><?php _e( 'Select none', 'modifier-for-colors-labels-variations-for-woocommerce' ); ?></button>
+                <button class="button fr plus add_new_attribute" data-attribute="<?php echo $attribute_taxonomy_name; ?>"><?php _e( 'Add new', 'modifier-for-colors-labels-variations-for-woocommerce' ); ?></button>
                 <?php
             }
         }
 
         /**
-         * Get terms attributes array +++
+         * Get terms attributes array 
          *
          */
         protected function get_terms( $tax_name ) {

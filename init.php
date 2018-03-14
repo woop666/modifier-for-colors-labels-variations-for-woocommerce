@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Modifier For Display Color Label Variations
+ * Plugin Name: Modifier For Colors Label Variations For Woocomerce
  * Plugin URI: 
- * Description: 
+ * Description: By using my woocommerce plugin you can generate color and image swatches to display the available product variable attributes like colors, sizes, styles etc.
  * Version: 1.0.0
- * Author: woop666
+ * Author: Stepanchenko Nikolay as woop666
  * Author URI: https://github.com/woop666
  *
  */
@@ -21,30 +21,30 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110 1301  USA
 */
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
-if ( ! function_exists( 'dclv_plugin_registration_hook' ) ) {
-	require_once 'plugin-options/dclv-plugin-registration-hook.php';
+if ( ! function_exists( 'mclv_plugin_registration_hook' ) ) {
+	require_once 'plugin options/mclv-plugin-registration-hook.php';
 }
-register_activation_hook( __FILE__, 'dclv_plugin_registration_hook' );
+register_activation_hook( __FILE__, 'mclv_plugin_registration_hook' );
 
-if ( ! defined( 'DCLV' ) ) {
-	define( 'DCLV', true );
+if ( ! defined( 'MCLV' ) ) {
+	define( 'MCLV', true );
 }
-if ( ! defined( 'DCLV_URL' ) ) {
-	define( 'DCLV_URL', plugin_dir_url( __FILE__ ) );
+if ( ! defined( 'MCLV_URL' ) ) {
+	define( 'MCLV_URL', plugin_dir_url( __FILE__ ) );
 }
-if ( ! defined( 'DCLV_DIR' ) ) {
-	define( 'DCLV_DIR', plugin_dir_path( __FILE__ ) );
+if ( ! defined( 'MCLV_DIR' ) ) {
+	define( 'MCLV_DIR', plugin_dir_path( __FILE__ ) );
 }
-if ( ! defined( 'DCLV_VERSION' ) ) {
-	define( 'DCLV_VERSION', '1.0.0' );
+if ( ! defined( 'MCLV_VERSION' ) ) {
+	define( 'MCLV_VERSION', '1.0.0' );
 
 }
 
-function dclv_constructor() {
+function mclv_constructor() {
     global $woocommerce;
     if ( ! isset( $woocommerce ) ) return;
 
@@ -52,17 +52,13 @@ function dclv_constructor() {
 
     // Load required classes and functions
     require_once('functions.php');
-    require_once('class-dclv-admin.php');
-    require_once('class-dclv-frontend.php');
-    require_once('class-dclv.php');
+    require_once('class-mclv-admin.php');
+    require_once('class-mclv-frontend.php');
+    require_once('class-mclv.php');
 
     // Let's start the game!
-    global $dclv;
-    $dclv = new DCLV();
-
-
+    global $mclv;
+    $mclv = new MCLV();
 }
 
-
-
-add_action('plugins_loaded', 'dclv_constructor' );
+add_action('plugins_loaded', 'mclv_constructor' );

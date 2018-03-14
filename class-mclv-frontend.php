@@ -3,13 +3,13 @@
  * Frontend class
  */
 
-if ( !defined( 'DCLV' ) ) { exit; } // Exit if accessed directly
+if ( !defined( 'MCLV' ) ) { exit; } // Exit if accessed directly
 
-if( !class_exists( 'DCLV_Frontend' ) ) {
+if( !class_exists( 'MCLV_Frontend' ) ) {
     /**
      * Frontend class.
      */
-    class DCLV_Frontend {
+    class MCLV_Frontend {
 
         public $version;
 
@@ -21,28 +21,28 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
             $this->version = $version;
 
             //Actions
-            add_action( 'init', array( $this, 'init' ) );
-            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_static' ) );
+            add_action('init', array( $this, 'init'));
+            add_action('wp_enqueue_scripts', array( $this, 'enqueue_static'));
 
             //Override default WooCommerce add-to-cart/variable.php template
-            add_action( 'template_redirect', array( $this, 'override' ) );
+            add_action('template_redirect', array( $this, 'override'));
 
             //Loaded
-            do_action( 'dclv_loaded' );
+            do_action('mclv_loaded');
 
-            add_action( 'woocommerce_single_variation', array( $this, 'single_variation' ) );
+            add_action('woocommerce_single_variation', array($this, 'single_variation'));
         }
 
 
         /**
-         * Init method +++
+         * Init method 
          *
          */
         public function init() {}
 
 
         /**
-         * Override default template +++
+         * Override default template 
          */
         public function override() {
             remove_action( 'woocommerce_variable_add_to_cart', 'woocommerce_variable_add_to_cart', 30 );
@@ -51,7 +51,7 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
 
 
         /**
-         * Output the variable product add to cart area. +++
+         * Output the variable product add to cart area. 
          */
         function variable_add_to_cart() {
             global $product;
@@ -73,12 +73,12 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
                 'attributes'   			=> $attributes,
                 'selected_attributes' 	=> $selected_attributes,
                 'attributes_types'      => $this->get_variation_attributes_types( $attributes )
-            ), '', DCLV_DIR . 'templates/' );
+            ), '', MCLV_DIR . 'templates/' );
         }
 
 
         /**
-         * Get an array of types and values for each attribute +++
+         * Get an array of types and values for each attribute 
          *
          * @access public
          * @since 1.0.0
@@ -105,29 +105,29 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
 
 
         /**
-         * Enqueue frontend styles and scripts +++
+         * Enqueue frontend styles and scripts 
          *
          */
         public function enqueue_static() {
             global $post, $woocommerce;
 
-			wp_register_script( 'dclv_frontend', DCLV_URL . 'assets/js/frontend.js', array('jquery', 'tooltipster', 'wc-add-to-cart-variation'), $this->version, true );
-            wp_register_script( 'tooltipster', DCLV_URL . 'assets/js/tooltipster.bundle.min.js', array('jquery'), $this->version, true );
-			wp_register_style( 'dclv_frontend', DCLV_URL . 'assets/css/frontend.css', false, $this->version );
-            wp_register_style( 'dclv_tooltipster', DCLV_URL . 'assets/css/tooltipster.bundle.min.css', false, $this->version );
-            wp_register_style( 'dclv_tooltipster-sideTip-borderless', DCLV_URL . 'assets/css/tooltipster-sideTip-borderless.min.css', false, $this->version );
+			wp_register_script( 'mclv_frontend', MCLV_URL . 'assets/js/frontend.js', array('jquery', 'tooltipster', 'wc-add-to-cart-variation'), $this->version, true );
+            wp_register_script( 'tooltipster', MCLV_URL . 'assets/js/tooltipster.bundle.min.js', array('jquery'), $this->version, true );
+			wp_register_style( 'mclv_frontend', MCLV_URL . 'assets/css/frontend.css', false, $this->version );
+            wp_register_style( 'mclv_tooltipster', MCLV_URL . 'assets/css/tooltipster.bundle.min.css', false, $this->version );
+            wp_register_style( 'mclv_tooltipster-sideTip-borderless', MCLV_URL . 'assets/css/tooltipster-sideTip-borderless.min.css', false, $this->version );
 
             if( is_product() || ( ! empty( $post->post_content ) && strstr( $post->post_content, '[product_page' ) ) ) {
                 wp_enqueue_script('tooltipster');
-                wp_enqueue_script('dclv_frontend');
-                wp_enqueue_style('dclv_frontend');
-                wp_enqueue_style('dclv_tooltipster');
-                wp_enqueue_style('dclv_tooltipster-sideTip-borderless');
+                wp_enqueue_script('mclv_frontend');
+                wp_enqueue_style('mclv_frontend');
+                wp_enqueue_style('mclv_tooltipster');
+                wp_enqueue_style('mclv_tooltipster-sideTip-borderless');
             }
         }
 
         /**
-         * single variation template for variable_wccl +++
+         * single variation template for variable
          *
          */
         public function single_variation() {
@@ -138,7 +138,7 @@ if( !class_exists( 'DCLV_Frontend' ) ) {
                 return;
             }
                 
-            $product_id = dclv_check_wc_version( '2.6', '>=' ) ? $product->get_id() : $product->id;
+            $product_id = mclv_check_wc_version( '2.6', '>=' ) ? $product->get_id() : $product->id;
             
             ob_start();
 

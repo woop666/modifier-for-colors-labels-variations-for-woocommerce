@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $woocommerce, $product, $post;
 
 $wc_attribute_label = function_exists('wc_attribute_label') ? 'wc_attribute_label' : 'attribute_label';
-$product_id = dclv_check_wc_version( '2.6', '>=' ) ? $product->get_id() : $product->id;
+$product_id = mclv_check_wc_version( '2.6', '>=' ) ? $product->get_id() : $product->id;
 
 $name = isset( $name ) ? $name : '';
 ?>
@@ -80,7 +80,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
                                     if ( ! in_array( $term->slug, $options ) ) {
                                         continue;
                                     }
-                                    $value = dclv_get_term_meta( $term->term_id, $name . '_dclv_value');
+                                    $value = mclv_get_term_meta( $term->term_id, $name . '_mclv_value');
                                     echo '<option value="' . esc_attr( $term->slug ) . '" ' . selected( sanitize_title( $selected_value ), sanitize_title( $term->slug ), false ) . ' data-value="'. $value .'">' . apply_filters( 'woocommerce_variation_option_name', $term->name ) . '</option>';
                                 }
 

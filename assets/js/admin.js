@@ -4,13 +4,13 @@
  */
 jQuery(function($){
 
-    $(document).on('dclv_colorpicker', function(){
+    $(document).on('mclv_colorpicker', function(){
         $('[data-type*="color"]').each(function(){
             $(this).wpColorPicker();
         });
-    }).trigger('dclv_colorpicker');
+    }).trigger('mclv_colorpicker');
 
-    $(document).on('dclv_upload', function(){
+    $(document).on('mclv_upload', function(){
         $('[data-type*="image"]').each(function(){
             var button = $("<input type='button' name='' id='term-value_button' class='button' value='Upload' />");
             button.insertAfter(this);
@@ -36,5 +36,5 @@ jQuery(function($){
                 return false;
             });
         });
-    }).trigger('dclv_upload');
+    }).trigger('mclv_upload');
 });

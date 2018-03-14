@@ -6,7 +6,7 @@
 
 (function ($, window, document) {
 
-    $.fn.dclv = function () {
+    $.fn.mclv = function () {
         var form = this;
         var last_change = form.data('last_change');
         var select = form.find('.variations select');
@@ -53,24 +53,16 @@
                                     t.val(o.val()).change();
                                 }
                             });
-                        var addOption = true;
+
+                        var addOption = '20px';
 
                         function colorpicker(option, value, addOption){
-                            if(addOption){
-                                option.append($('<span/>', {
-                                    'css': {
-                                        'background': value,
-                                        "border-radius": "20px"
-                                    }
-                                }));
-                            }else{
-                                option.append($('<span/>', {
-                                    'css': {
-                                        'background': value,
-                                    }
-                                }));
-                            }
-                            
+                            option.append($('<span/>', {
+                                'css': {
+                                    'background': value,
+                                    'border-radius': addOption
+                                }
+                            }));
                         }
 
                         function tooltip_(option, desc){
@@ -85,20 +77,12 @@
                         }
 
                         function two_color_(option, value, addOption){
-                            if(addOption){
-                              option.append($('<span/>', {
-                                'css': {
-                                    'background': 'linear-gradient(135deg, ' + value.substr(0, 7) + ' 51%, ' + value.substr(7, 14) + ' 51%)',
-                                    "border-radius": "20px"
-                                    }
-                                }));  
-                          }else{
                             option.append($('<span/>', {
                                 'css': {
                                     'background': 'linear-gradient(135deg, ' + value.substr(0, 7) + ' 51%, ' + value.substr(7, 14) + ' 51%)',
-                                    }
-                                }));
-                          }
+                                    'border-radius': addOption
+                                }
+                            }));
                         }
 
                         function description(option, desc, className){
@@ -115,46 +99,59 @@
                             }));
                         }
 
-                        
-                        if (type == 'colorpicker') {
-                            colorpicker(option, value);
-                        }else if(type == 'round_color'){
-                            borderRadius(option);
-                            colorpicker(option, value, addOption);
-                        }else if(type == 'color_desc'){
-                            wrap(option);
-                            description(option, desc, 'desc');
-                            colorpicker(option, value);
-                        }else if(type == 'tooltip_color'){
-                            colorpicker(option, value);
-                            tooltip_(option, desc);
-                        }else if (type == 'two_colorpicker') {
-                            two_color_(option, value);
-                        }else if (type == 'round_two_color') {
-                            borderRadius(option);
-                            two_color_(option, value, addOption);
-                        }else if (type == 'two_color_desc'){
-                            wrap(option);
-                            description(option, desc, 'desc');
-                            two_color_(option, value);
-                        }else if(type == 'tooltip_two_color'){
-                            two_color_(option, value);
-                            tooltip_(option, desc);
-                        }else if (type == 'image') {
-                            img_value(option, value);
-                        }else if (type == 'round_image'){
-                            img_value(option, value);
-                        }else if(type == 'desc_image'){
-                            wrap(option);
-                            description(option, desc, 'desc_img');
-                            img_value(option, value);
-                        }else if(type == 'tooltip_image'){
-                            img_value(option, value);
-                            tooltip_(option, desc);
-                        }else if (type == 'label') {
-                            option.append($('<span/>', {
+                        switch(type){
+                            case 'colorpicker':
+                                colorpicker(option, value);
+                                break;
+                            case 'round_color':
+                                borderRadius(option);
+                                colorpicker(option, value, addOption);
+                                break;
+                            case 'color_desc':
+                                wrap(option);
+                                description(option, desc, 'desc');
+                                colorpicker(option, value);
+                                break;
+                            case 'tooltip_color':
+                                colorpicker(option, value);
+                                tooltip_(option, desc);
+                                break;
+                            case 'two_colorpicker':
+                                two_color_(option, value);
+                                break;
+                            case 'round_two_color':
+                                borderRadius(option);
+                                two_color_(option, value, addOption);
+                                break;
+                            case 'two_color_desc':
+                                wrap(option);
+                                description(option, desc, 'desc');
+                                two_color_(option, value);
+                                break;
+                            case 'tooltip_two_color':
+                                two_color_(option, value);
+                                tooltip_(option, desc);
+                                break;
+                            case 'image':
+                                img_value(option, value);
+                                break;
+                            case 'round_image':
+                                img_value(option, value);
+                                break;
+                            case 'desc_image':
+                                wrap(option);
+                                description(option, desc, 'desc_img');
+                                img_value(option, value);
+                                break;
+                            case 'tooltip_image':
+                                img_value(option, value);
+                                tooltip_(option, desc);
+                                break;
+                            case 'label':
+                                option.append($('<span/>', {
                                 'text': value
-                            }));
+                                }));
+                                break;
                         }
                     }
                 });
@@ -193,7 +190,7 @@
         this.updateOptions = function () {
             var variations;
 
-            if( (typeof dclv_arg != 'undefined') && ! dclv_arg.is_wc24 ) {
+            if( (typeof mclv_arg != 'undefined') && ! mclv_arg.is_wc24 ) {
 
                 form.find('.variations select').each(function (index, el) {
 
@@ -230,9 +227,9 @@
         var form = $('.variations_form');
         var select = form.find('.variations select');
 
-        $(document).on('dclv_change check_variations', form,function () {
-            $(this).dclv();
-        }).trigger('dclv_change');
+        $(document).on('mclv_change check_variations', form,function () {
+            $(this).mclv();
+        }).trigger('mclv_change');
 
 
         $(document).on('change', select, function () {

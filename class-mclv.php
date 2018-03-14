@@ -4,14 +4,14 @@
  *
  */
 
-if ( !defined( 'DCLV' ) ) { exit; } // Exit if accessed directly
+if ( !defined( 'MCLV' ) ) { exit; } // Exit if accessed directly
 
-if( !class_exists( 'DCLV' ) ) {
+if( !class_exists( 'MCLV' ) ) {
     /**
      *
      * @since 1.0.0
      */
-    class DCLV {
+    class MCLV {
 
         /**
          * Plugin object
@@ -24,7 +24,7 @@ if( !class_exists( 'DCLV' ) ) {
         /**
          * Constructor
          *
-         * @return mixed|DCLV_Admin|DCLV_Frontend
+         * @return mixed|MCLV_Admin|MCLV_Frontend
          * @since 1.0.0
          */
         public function __construct() {
@@ -33,9 +33,9 @@ if( !class_exists( 'DCLV' ) ) {
             add_action( 'init', array( $this, 'init' ) );
 
             if( is_admin() ) {
-                $this->obj = new DCLV_Admin( DCLV_VERSION );
+                $this->obj = new MCLV_Admin( MCLV_VERSION );
             }  else {
-                $this->obj = new DCLV_Frontend( DCLV_VERSION );
+                $this->obj = new MCLV_Frontend( MCLV_VERSION );
             }
 
             // add new attribute types
@@ -48,7 +48,7 @@ if( !class_exists( 'DCLV' ) ) {
          *
          */
         public function attribute_types( $default_type ){
-            $custom = dclv_get_custom_tax_types();
+            $custom = mclv_get_custom_tax_types();
             return is_array( $custom ) ? array_merge( $default_type, $custom ) : $default_type;
         }
 

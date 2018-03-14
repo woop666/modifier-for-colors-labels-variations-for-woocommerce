@@ -1,0 +1,33 @@
+== Modifier For Color Label Variations For Woocomerce ==
+
+Contributors: woop666.
+Tags: woocommerce,woocommerce colors and labels variations,woocommerce colors,mclv woocommerce,woocommerce variations,modifier for display color label variations,colors and labels variations,colors and labels
+Requires at least - 2.4.1
+Tested up to - 4.9.4
+Stable tag - 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Помимо заголовка в readme.txt используются еще несколько секций:
+
+== Description ==
+– подробное описание плагина, которое будет выводиться на странице плагина в репозитории.
+
+== Installation ==
+ – описание процесса установки плагина.
+
+== Frequently Asked Questions ==
+ – часто задаваемые вопросы по плагину.
+
+== Screenshots ==
+– описание скриншотов плагина.
+
+== Changelog ==
+
+= 1.0.0 =
+
+* Initial release
+
+== Upgrade Notice ==
+
+Last Stable Tag 1.0.0
