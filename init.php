@@ -4,7 +4,7 @@
  * Plugin URI: 
  * Description: By using my woocommerce plugin you can generate color and image swatches to display the available product variable attributes like colors, sizes, styles etc.
  * Version: 1.0.0
- * Author: Stepanchenko Nikolay as woop666
+ * Author: Stepanchenko Nikolay
  * Author URI: https://github.com/woop666
  *
  */
@@ -26,7 +26,7 @@
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
 if ( ! function_exists( 'mclv_plugin_registration_hook' ) ) {
-	require_once 'plugin options/mclv-plugin-registration-hook.php';
+	require_once 'plugin-options/mclv-plugin-registration-hook.php';
 }
 register_activation_hook( __FILE__, 'mclv_plugin_registration_hook' );
 

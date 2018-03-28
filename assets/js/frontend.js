@@ -73,7 +73,7 @@
 
 
                         function wrap(option){
-                            option.wrap('<div></div>');
+                            option.wrap('<div class="MDLC_wrap">');
                         }
 
                         function two_color_(option, value, addOption){
